@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Geeking | Thoughts of Scenix]]></title>
+  <link href="http://scenix007.github.io/blog/categories/geeking/atom.xml" rel="self"/>
+  <link href="http://scenix007.github.io/"/>
+  <updated>2014-04-09T12:07:52+08:00</updated>
+  <id>http://scenix007.github.io/</id>
+  <author>
+    <name><![CDATA[Long Shao]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Setup Blog on GitHub Using Octopress]]></title>
+    <link href="http://scenix007.github.io/blog/setup-blog-on-github-using-octopress/"/>
+    <updated>2014-04-09T11:43:28+08:00</updated>
+    <id>http://scenix007.github.io/blog/setup-blog-on-github-using-octopress</id>
+    <content type="html"><![CDATA[<h2>Brief</h2>
+
+<p>I had my github account set up few days ago, and I was excited finding that Github provides a simple way to hosting a blog with just few steps configuration. But the default hosting programe does not flexible enough, so I decided to find something fancy. After few searches on <a href="https://google.com">Google</a>, I discovered <a href="http://octopress.org">Octopress</a>. So let&rsquo;s go rock!</p>
+
+<h2>Introduce to Octopress</h2>
+
+<p><a href="http://octopress.org">Octopress</a> is a framework designed by <a href="http://brandonmathis.com">Brandon Mathis</a> for <a href="https://github.com/mojombo/jekyll">Jekyll</a>, the blog aware static site generator powering <a href="https://pages.github.com">Github Pages</a>. To start blogging with Jekyll, you have to write your own HTML templates, CSS, Javascripts and set up your configuration. But with Octopress All of that is already taken care of. Simply <a href="https://github.com/imathis/octopress">clone or fork Octopress</a>, install dependencies and the theme, and you&rsquo;re set.</p>
+
+<h2>Setup Environment</h2>
+
+<p>I&rsquo;m currently working on Windows7-x64. So I only post the env setting for windows x64. I assume the setting up on Linux or MacOS are similar.
+<a href="http://octopress.org">Octopress</a> needs ruby with development kit and git. So let&rsquo;s install and configure them one by one.</p>
+
+<h3>1. Ruby and Ruby DevKit</h3>
+
+<p>Download suitable version of ruby and devkit form <a href="http://rubyinstaller.org/downloads/">Ruby Installer Download Page</a>. Since octopress requires a 1.9.3 above verion of ruby, I suggest choose the latest version. Make sure the version of development kit is corresponding to the version of ruby you installed. As I&rsquo;m working on a PC running Windows7-x64. I downloaded <a href="http://dl.bintray.com/oneclick/rubyinstaller/rubyinstaller-2.0.0-p451-x64.exe?direct">Ruby 2.0.0-p451(x64)</a> and <a href="http://cdn.rubyinstaller.org/archives/devkits/DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe">DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe</a>.
+I installed ruby to <code>C:\Ruby200-x64</code>, with <em>Add Ruby executables to your PATH</em> checked. When completed the installation. Press <code>Windows+R</code>, type <code>cmd</code> to open up command prompt. After typed <code>ruby -v</code>, ruby version infomation showed up as follows:
+<code>bash
+$ruby -v
+ruby 2.0.0p451 (2014-02-24) [x64-mingw32]
+</code>
+That indicated I had successfully installed Ruby and Ruby executables are added to my PATH.
+<a href="http://cdn.rubyinstaller.org/archives/devkits/DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe">DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe</a> seemed to be a 7-zip self-extract file. I extracted it to <code>C:\RubyDevKit</code>. Then I opened windows command prompt and changed current directory to <code>C:\RubyDevKit</code> by typing <code>cd C:\RubyDevKit</code>. I generated a conf file named <code>config.yml</code> by typing command <code>ruby dk.rb init</code>. I Edited the conf file with notepad, added following lines to the conf file and saved. Notice that there&rsquo;s little <code>-</code> at the start of line.
+<code>bash
+ - C:/Ruby200-x64
+</code>
+Then I installed it by typing <code>ruby dk.rb install</code>.
+<code>bash
+C:\RubyDevKit&gt;ruby dk.rb install
+[INFO] Updating convenience notice gem override for 'C:/Ruby200-x64'
+[INFO] Installing 'C:/Ruby200-x64/lib/ruby/site_ruby/devkit.rb'
+</code>
+After doing all of this, I had my Ruby enviroment set up.</p>
+
+<h3>2. Git and Github setup</h3>
+
+<p><a href="http://octopress.org">Octopress</a> also needs git to be functional. I downloaded <a href="http://msysgit.github.io/">git for windows</a> and installed with <em>Add git to my PATH</em>. I checked the version of git by following command.
+<code>bash
+C:\Users\scenix&gt;git --version
+git version 1.9.0.msysgit.0
+</code>
+Next thing I did was granting my PC with access permission to my github account. Fisrt I generated ssh key.
+<code>bash
+$ ssh-keygen -C "myemail@email.com" -t rsa
+Generating public/private rsa key pair.
+Enter file in which to save the key (/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /.ssh/id_rsa.
+Your public key has been saved in /.ssh/id_rsa.pub.
+The key fingerprint is:
+11:9f:ac:3c:05:*********************** myemail@email.com
+</code>
+Okey, I had my public ssh-key stored in file <code>id_rsa.pub</code>. I opened my <a href="https://github.com/settings/profile">github account setting page</a> with my browser and clicked <em>SSH Keys</em> on the left. Then clicked <em>Add SSH Key</em> button, gave the new key a name such like <em>GitHub for bash &ndash; Windows7-x64-PC</em>. Then I copied the content of fileb <code>id_rsa.pub</code> to the <em>Key</em> field. Finally, I clicked <em>Add Key</em> to complish the key-adding process.
+By typing <code>ssh -v git@github.com</code> I checked my SSH-Key settings. I found <code>You've successfully authenticated, but GitHub does not provide shell access.</code> message in the output log, and that indicated I had successfully granted my PC with access permission to my own github account.</p>
+
+<h2>Install Octopress</h2>
+
+<p>I forked octopress to my own github by clicking <em>fork</em> button on <a href="https://github.com/imathis/octopress">Octopress Github Repositery</a>. Then I got my own copy of octopress with link <a href="https://github.com/mygithubaccountname/octopress,">https://github.com/mygithubaccountname/octopress,</a> thus everything I did to it will follow me everywhere I go.
+ I cloned the repository I just forked to my PC by <a href="https://windows.github.com">Github For Windows</a>. I think git bash can do the same work, but I do like a pleasant user interface. Then I opened command prompt and changed directory to <code>octopress</code> and typed the install command as follows:
+ <code>bash
+ $gem install bundler
+ $bundle install
+ $rake install
+</code>
+ But I ran into an error, error message was :
+ <code>bash
+ rake  aborted!You have already activated rake 0.9.6, but your Gemfile requires rake 0.9.2.2.
+</code>
+ Seems like I my gemfile required a lower version of rake. So I edited the <code>Gemfile</code>.  I changed the line <code>gem 'rake', '~&gt; 0.9'</code> to <code>gem 'rake', '~&gt; 0.9.6</code>, and tried <code>rake install</code> again. This time everything went fine. I had octopress installed successfully.</p>
+
+<h2>Configure Octopress</h2>
+
+<p>I opened <code>_config.yml</code> file with <code>Sublime Text 3</code> editor and saved it using <code>UTF-8</code> encoding. Then I did some paper work.
+<code>bash
+url: http://scenix007.github.io
+title: Thoughts of Scenix
+subtitle: Keep things tracked.
+author: Long Shao
+simple_search: https://www.google.com/search
+description:
+</code>
+I did not want date string in my post url, so I add this config <code>permalink: /blog/:title/</code>.
+I went to Ruby installation location and changed directory to <code>C:\Ruby200-x64\lib\ruby\gems\2.0.0\gems\jekyll-0.12.0\lib\jekyll</code>. Opened file <code>convertible.rb</code> , change <code>self.content = File.read(File.join(base, name))</code> to <code>self.content = File.read(File.join(base, name), :encoding =&gt; "utf-8")</code>. This added <code>UTF-8</code> support.</p>
+
+<h2>Write New Post</h2>
+
+<p>I started to write this post by typing following command.
+<code>bash
+rake new_post["Setup Blog on GitHub Using Octopress"]
+</code>
+And a new file named <code>2014-04-09-setup-blog-on-github-using-octopress.markdown</code> was generated in <code>source/_posts</code> folder. I edited it with <code>Sublime Text 3</code> editor.</p>
+
+<h2>Preview Post</h2>
+
+<p>When done with editing, I typed the following command to preview my new post in browser.
+<code>
+rake generate
+rake preview
+</code>
+The preview url is <a href="http://127.0.0.1:4000.">http://127.0.0.1:4000.</a> Press <code>Ctrl+C</code> to quite preview process.</p>
+
+<h2>Deploy Blog to Github</h2>
+
+<p>I was satisfied by the preview, so I decided to do the last step &ndash; deploy my blog to github.
+I created a new repositery on gitbub named <code>scenix007.github.io</code>. Notice that the repo-name is restricted to be something like  <code>gitbub_username.gitbub.io</code> to get things work.
+Then I went to my local octopress directory, and type <code>rake setup_github_pages</code>, then input my github repositery url like:
+<code>
+https://github.com/scenix007/scenix007.github.io.git
+</code>
+This url can be found on the home page of your repositery.
+The last thing, hit <code>rake deploy</code> command to make the final deployment.
+Github took almost 15 minutes to get my site up for the first time. And that&rsquo;s it.</p>
+]]></content>
+  </entry>
+  
+</feed>

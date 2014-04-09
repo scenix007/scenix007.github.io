@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: http://scenix007.github.io/sitemap.xml 
